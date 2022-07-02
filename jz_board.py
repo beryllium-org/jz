@@ -4,9 +4,12 @@ from os import getcwd, chdir
 
 VERSION = "1.1-board"
 
+
 def decompress(filee, directory="."):
-    print(f"Decompressing {filee} into {directory if directory != '.' else 'the current directory'}")
-    with open(filee,"rb") as inpf:
+    print(
+        f"Decompressing {filee} into {directory if directory != '.' else 'the current directory'}"
+    )
+    with open(filee, "rb") as inpf:
         dataa = inpf.read()
     olddir = getcwd()
     chdir(directory)
@@ -14,20 +17,20 @@ def decompress(filee, directory="."):
     del dataa
     collect()
     collect()
-    ctlstr = str(unz[:unz.find(bytes("|eocf","utf-8"),0)],"utf-8")
+    ctlstr = str(unz[: unz.find(bytes("|eocf", "utf-8"), 0)], "utf-8")
     ctlarr = ctlstr.split()
-    offset = unz.find(bytes("|eocf","utf-8"),0)+5
+    offset = unz.find(bytes("|eocf", "utf-8"), 0) + 5
     for i in range(0, int(len(ctlarr)), 2):
         fname = ctlarr[i]
-        lco = int(ctlarr[i+1])
+        lco = int(ctlarr[i + 1])
         print(f"Extracting: {fname} ({str(lco)} bytes)")
         try:
-            with open(fname,"wb") as fout:
-                fout.write(unz[offset:offset+lco])
+            with open(fname, "wb") as fout:
+                fout.write(unz[offset : offset + lco])
                 fout.flush()
         except OSError:
             print("Error: Could not write file")
-            return(1)
+            return 1
         offset += lco
         del lco, fname
         collect()
@@ -35,13 +38,16 @@ def decompress(filee, directory="."):
     del unz
     chdir(olddir)
     del olddir
-    return(0)
+    return 0
+
 
 def help():
-    print(f"""
+    print(
+        f"""
         About: jz file compression module, board edition.
                Version: {VERSION} - Author: Bill Sideris (bill88t)
                This project is licenced under the MIT licence.
         Usage: jz.decompress(\"jz_archive_name\")
-    """)
-    return(0)
+    """
+    )
+    return 0
