@@ -33,8 +33,8 @@ def compress(*argv):
         try:
             with open(argv[i], "rb") as togetlelen:
                 inpt = togetlelen.read()
-                ctlstr += f"{str(len(inpt))} "  # do not remove the whitespace
-                print(f"Loading: {fnamee} ({str(len(inpt))} bytes)")
+                ctlstr += f"{len(inpt)} "  # do not remove the whitespace
+                print(f"Loading: {fnamee} ({len(inpt)} bytes)")
                 datastr += inpt  # copying bytes, not str
                 del inpt
         except OSError:

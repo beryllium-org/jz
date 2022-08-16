@@ -1,4 +1,4 @@
-from zlib import decompress
+from zlib import decompress as zdecompress
 from gc import collect
 from os import getcwd, chdir
 
@@ -13,7 +13,7 @@ def decompress(filee, directory="."):
         dataa = inpf.read()
     olddir = getcwd()
     chdir(directory)
-    unz = decompress(dataa)
+    unz = zdecompress(dataa)
     del dataa
     collect()
     collect()
@@ -23,7 +23,7 @@ def decompress(filee, directory="."):
     for i in range(0, int(len(ctlarr)), 2):
         fname = ctlarr[i]
         lco = int(ctlarr[i + 1])
-        print(f"Extracting: {fname} ({str(lco)} bytes)")
+        print(f"Extracting: {fname} ({lco} bytes)")
         try:
             with open(fname, "wb") as fout:
                 fout.write(unz[offset : offset + lco])
