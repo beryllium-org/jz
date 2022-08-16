@@ -2,7 +2,7 @@ from zlib import decompress as zdecompress
 from gc import collect
 from os import getcwd, chdir
 
-VERSION = "1.1-board"
+VERSION = "1.2-board"
 
 
 def decompress(filee, directory="."):

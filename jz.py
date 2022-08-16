@@ -3,7 +3,7 @@ from gc import collect
 from sys import argv
 from os import getcwd, chdir
 
-VERSION = "1.1"
+VERSION = "1.2"
 
 
 def compress(*argv):
@@ -15,7 +15,7 @@ def compress(*argv):
     # starting print
     objc = len(argv) - 1
     targetfile = argv[objc]
-    print(f"Compressing {str(objc)} files onto {targetfile}")
+    print(f"Compressing {objc} files onto {targetfile}")
 
     # let's create the string
     ctlstr = ""
@@ -97,7 +97,7 @@ def decompress(filee, directory="."):
     for i in range(0, int(len(ctlarr)), 2):  # skipping over len
         fname = ctlarr[i]
         lco = int(ctlarr[i + 1])
-        print(f"Extracting: {fname} ({str(lco)} bytes)")
+        print(f"Extracting: {fname} ({lco} bytes)")
         try:
             with open(fname, "wb") as fout:
                 fout.write(unz[offset : offset + lco])
