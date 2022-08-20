@@ -3,7 +3,7 @@ from gc import collect
 from sys import argv
 from os import getcwd, chdir
 
-VERSION = "1.2"
+VERSION = "1.2.1"
 
 
 def compress(*argv):
@@ -68,10 +68,11 @@ def compress(*argv):
     return 0
 
 
-def decompress(filee, directory="."):
-    print(
-        f"Decompressing {filee} into {directory if directory != '.' else 'the current directory'}"
-    )
+def decompress(filee, directory=".", quiet=False):
+    if not quiet:
+        print(
+            f"Decompressing {filee} into {directory if directory != '.' else 'the current directory'}"
+        )
 
     # dump file inputted
     with open(filee, "rb") as inpf:
@@ -97,7 +98,8 @@ def decompress(filee, directory="."):
     for i in range(0, int(len(ctlarr)), 2):  # skipping over len
         fname = ctlarr[i]
         lco = int(ctlarr[i + 1])
-        print(f"Extracting: {fname} ({lco} bytes)")
+        if not quiet:
+            print(f"Extracting: {fname} ({lco} bytes)")
         try:
             with open(fname, "wb") as fout:
                 fout.write(unz[offset : offset + lco])
