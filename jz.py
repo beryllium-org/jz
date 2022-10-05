@@ -3,7 +3,7 @@ from gc import collect
 from sys import argv
 from os import getcwd, chdir
 
-VERSION = "1.2.2"
+VERSION = "1.2.5"
 
 
 def compress(*argv):
