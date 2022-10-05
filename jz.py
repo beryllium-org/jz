@@ -3,7 +3,7 @@ from gc import collect
 from sys import argv
 from os import getcwd, chdir
 
-VERSION = "1.2.1"
+VERSION = "1.2.2"
 
 
 def compress(*argv):
@@ -68,7 +68,7 @@ def compress(*argv):
     return 0
 
 
-def decompress(filee, directory=".", quiet=False):
+def decompress(filee, directory=".", quiet=False, debug=False):
     if not quiet:
         print(
             f"Decompressing {filee} into {directory if directory != '.' else 'the current directory'}"
@@ -77,13 +77,21 @@ def decompress(filee, directory=".", quiet=False):
     # dump file inputted
     with open(filee, "rb") as inpf:
         dataa = inpf.read()
-
+    
+    if debug:
+        print("Dumped to ram")
+    
     # switch to target dir
     olddir = getcwd()
     chdir(directory)
-
+    
+    if debug:
+        print("switched to target")
+    
     # unzlib data
     unz = zlib.decompress(dataa)
+    if debug:
+        print("decomp done")
     del dataa
     collect()
     collect()
@@ -91,7 +99,9 @@ def decompress(filee, directory=".", quiet=False):
     # read control string
     ctlstr = str(unz[: unz.find(bytes("|eocf", "utf-8"), 0)], "utf-8")
     ctlarr = ctlstr.split()
-
+    if debug:
+        print("parsed control")
+    
     # set stepper variables
     offset = unz.find(bytes("|eocf", "utf-8"), 0) + 5
 
@@ -112,6 +122,8 @@ def decompress(filee, directory=".", quiet=False):
         collect()
         collect()
 
+    if debug:
+        print("done")
     # cleanup
     del unz
 
