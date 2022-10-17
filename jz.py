@@ -77,17 +77,17 @@ def decompress(filee, directory=".", quiet=False, debug=False):
     # dump file inputted
     with open(filee, "rb") as inpf:
         dataa = inpf.read()
-    
+
     if debug:
         print("Dumped to ram")
-    
+
     # switch to target dir
     olddir = getcwd()
     chdir(directory)
-    
+
     if debug:
         print("switched to target")
-    
+
     # unzlib data
     unz = zlib.decompress(dataa)
     if debug:
@@ -101,7 +101,7 @@ def decompress(filee, directory=".", quiet=False, debug=False):
     ctlarr = ctlstr.split()
     if debug:
         print("parsed control")
-    
+
     # set stepper variables
     offset = unz.find(bytes("|eocf", "utf-8"), 0) + 5
 
